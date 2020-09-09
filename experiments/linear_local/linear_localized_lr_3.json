@@ -1,0 +1,23 @@
+{
+  "grids": {
+    "input_lr": [
+      [["windU", "windV"], ["standard", {"dim":  0}]]
+    ],
+    "input_hr": [],
+    "target": [
+      "windU",
+      "windV"
+    ]
+  },
+  "data": {},
+  "losses": {},
+  "model": {
+    "name": "linear_localized_lr_3",
+    "modules": {
+      "type": "loclin",
+      "num_nearest_neighbors_lr": 3,
+      "num_models": 30000
+    }
+  },
+  "training": {}
+}

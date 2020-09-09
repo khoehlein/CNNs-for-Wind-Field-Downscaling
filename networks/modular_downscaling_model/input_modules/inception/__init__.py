@@ -1,0 +1,2 @@
+from .InceptionModuleHR import InceptionModuleHR
+from .InceptionModuleLR import InceptionModuleLR

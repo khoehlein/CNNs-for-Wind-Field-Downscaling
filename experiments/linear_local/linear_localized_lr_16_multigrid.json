@@ -1,0 +1,26 @@
+{
+  "grids": {
+    "input_lr": [
+      [["windU", "windV"], ["standard", {"dim":  0}]],
+      ["blh", ["standard", {"dim":  0}]],
+      ["fsr", ["standard", {"dim":  0}]],
+      ["z", ["standard", {"dim":  0}]]
+    ],
+    "input_hr": [],
+    "target": [
+      "windU",
+      "windV"
+    ]
+  },
+  "data": {},
+  "losses": {},
+  "model": {
+    "name": "linear_localized_lr_16_multigrid",
+    "modules": {
+      "type": "loclin",
+      "num_nearest_neighbors_lr": 16,
+      "num_models": 30000
+    }
+  },
+  "training": {}
+}

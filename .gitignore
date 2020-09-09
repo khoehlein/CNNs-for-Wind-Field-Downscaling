@@ -1,0 +1,12 @@
+.idea/
+*.pyc
+*.npy
+*.npz
+*.hdf5
+*.png
+*.pdf
+*.csv
+*.pth
+/data/hdf5
+/results
+/config

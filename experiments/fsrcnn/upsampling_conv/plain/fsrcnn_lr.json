@@ -1,0 +1,136 @@
+{
+  "grids": {
+    "input_lr": [
+      [["windU", "windV"], ["standard", {"dim":  0}]],
+      ["zOro", "standard"],
+      ["seaMask", "standard"]
+    ],
+    "input_hr": [],
+    "target": [
+      [["windU", "windV"], ["standard", {"dim":  0}]]
+    ]
+  },
+  "data": {},
+  "losses": {},
+  "model": {
+    "name": "fsrcnn_lr",
+    "modules": [
+      {
+        "type": "conv",
+        "output_channels": 56,
+        "kernel_size": 5,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": true
+      },
+      {
+        "type": "conv",
+        "output_channels": 12,
+        "kernel_size": 1,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": true
+      },
+      {
+        "type": "conv",
+        "output_channels": 12,
+        "kernel_size": 3,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": true
+      },
+      {
+        "type": "conv",
+        "output_channels": 12,
+        "kernel_size": 3,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": true
+      },
+            {
+        "type": "conv",
+        "output_channels": 12,
+        "kernel_size": 3,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": true
+      },
+      {
+        "type": "conv",
+        "output_channels": 12,
+        "kernel_size": 3,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": true
+      },
+      {
+        "type": "conv",
+        "output_channels": 56,
+        "kernel_size": 1,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": true
+      },
+      {
+        "type": "up_conv",
+        "output_channels": 56,
+        "kernel_size": 3,
+        "padding_mode": "replication",
+        "use_batch_norm": true,
+        "leaky_slope": "p",
+        "dropout_rate": 0.0,
+        "scale_factor": [2, 1],
+        "interpolation_mode": "nearest"
+      },
+      {
+        "type": "up_conv",
+        "output_channels": 56,
+        "kernel_size": [3, 5],
+        "padding_mode": "replication",
+        "use_batch_norm": true,
+        "leaky_slope": "p",
+        "dropout_rate": 0.0,
+        "scale_factor": [1, 3],
+        "interpolation_mode": "nearest"
+      },
+      {
+        "type": "up_conv",
+        "output_channels": 56,
+        "kernel_size": 3,
+        "padding_mode": "replication",
+        "use_batch_norm": true,
+        "leaky_slope": "p",
+        "dropout_rate": 0.0,
+        "scale_factor": [2, 1],
+        "interpolation_mode": "nearest"
+      },
+      {
+        "type": "conv",
+        "output_channels": 56,
+        "kernel_size": 3,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": true
+      },
+      {
+        "type": "conv",
+        "kernel_size": 3,
+        "dropout_rate": 0.0,
+        "leaky_slope": 1.0,
+        "padding_mode": "replication",
+        "use_batch_norm": false
+      }
+    ]
+  },
+  "training": {
+    "residual_interpolation_mode": null
+  }
+}

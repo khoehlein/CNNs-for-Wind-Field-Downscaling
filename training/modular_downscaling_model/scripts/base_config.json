@@ -1,0 +1,149 @@
+{
+  "grids": {
+    "input_lr": [
+      [["windU", "windV"], ["standard", {"dim":  0}]],
+      ["blh", ["standard", {"dim":  0}]],
+      ["fsr", ["standard", {"dim":  0}]],
+      ["z", ["standard", {"dim":  0}]],
+      ["zOro", ["standard", null]],
+      ["seaMask", ["standard", null]]
+    ],
+    "input_hr": [
+      ["zOro", ["standard", null]],
+      ["seaMask", ["standard", null]]
+    ],
+    "target": [
+      [["windU", "windV"], ["standard", {"dim":  0}]]
+    ]
+  },
+  "data": {
+    "directory": "data\\hdf5",
+    "lr_filter_name": "era5",
+    "hr_filter_name": "hres",
+    "region": "alps",
+    "training": {
+      "time_range": [[2017, 1], [2017, 12]],
+      "patching": true,
+      "patch_size": [24, 36]
+    },
+    "validation": {
+      "time_range": [[2018, 2], [2018, 2]],
+      "patching":  false
+    }
+  },
+  "model": {
+    "name": "modular_example",
+    "modules": [
+      {
+        "type": "cat",
+        "modules": [
+          {
+            "type": "input_lr_conv",
+            "feature_channels": 32,
+            "output_channels": 32,
+            "kernel_size": 3,
+            "num_residual_blocks": 1,
+            "layers_per_residual_block": 1,
+            "dropout_rate": 0.1
+          },
+          {
+            "type": "input_hr_conv",
+            "feature_channels_hr": 32,
+            "feature_channels_mr": 32,
+            "feature_channels_lr": 32,
+            "output_channels": 32,
+            "kernel_size_hr": 3,
+            "kernel_size_mr": 3,
+            "kernel_size_lr": 3,
+            "padding_mode": "replication",
+            "leaky_slope": 0.1,
+            "dropout_rate": 0.1,
+            "batch_norm": true,
+            "num_convolution_blocks_hr": 1,
+            "num_convolution_blocks_mr": 0,
+            "num_convolution_blocks_lr": 1
+          }
+        ]
+      },
+      {
+        "type": "super_conv",
+        "feature_channels": 32,
+        "output_channels": 32,
+        "kernel_size": 3,
+        "num_residual_blocks": 1,
+        "layers_per_residual_block": 1,
+        "scale_factor": [
+          2,
+          3
+        ],
+        "interpolation_mode": "bilinear"
+      },
+      {
+        "type": "super_conv",
+        "feature_channels": 16,
+        "output_channels": 2,
+        "kernel_size": 3,
+        "num_residual_blocks": 1,
+        "layers_per_residual_block": 1,
+        "scale_factor": [
+          2,
+          1
+        ],
+        "interpolation_mode": "bilinear",
+        "output_activation": false
+      }
+    ]
+  },
+  "losses": {
+    "use_mask": true,
+    "batch_reduction": "sum",
+    "training": [
+      {
+        "use_scalings": false,
+        "losses": ["MAE", "MSE", "L1", "Cos-D"]
+      },
+      {
+        "use_scalings": true,
+        "losses": ["MAE", "MSE", "L1", "Cos-D"]
+      }
+    ],
+    "validation": [
+      {
+        "use_scalings": false,
+        "losses": ["MAE", "MSE", "L1", "Cos-D"]
+      },
+      {
+        "use_scalings": true,
+        "losses": ["MAE", "MSE", "L1", "Cos-D"]
+      }
+    ]
+  },
+  "training": {
+    "directory": "results",
+    "initialization_mode": "orthogonal",
+    "residual_interpolation_mode": "bilinear",
+    "gpu": 0,
+    "epochs": 10,
+    "batch_size": 100,
+    "saving_period": 2,
+    "optimizer": {
+      "type": "adam",
+      "learning_rate": 0.001,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "weight_decay": 0.0001
+    },
+    "scheduler": {
+      "type": "plateau",
+      "gamma": 0.1,
+      "steps": 5
+    },
+    "debugging": {
+      "print_network_details": true,
+      "print_config": true,
+      "print_directories": true
+    }
+  }
+}

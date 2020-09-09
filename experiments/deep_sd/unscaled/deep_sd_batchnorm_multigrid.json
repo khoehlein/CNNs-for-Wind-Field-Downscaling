@@ -1,0 +1,66 @@
+{
+  "grids": {
+    "input_lr": [
+      [["windU", "windV"], ["standard", {"dim": 0}]],
+      ["blh", ["standard", {"dim": 0}]],
+      ["fsr", ["standard", {"dim": 0}]],
+      ["z", ["standard", {"dim": 0}]],
+      ["zOro", ["standard", null]],
+      ["seaMask", ["standard", null]]
+    ],
+    "input_hr": [
+      ["zOro", ["standard", null]],
+      ["seaMask", ["standard", null]]
+    ],
+    "target": ["windU", "windV"]
+  },
+  "data": {},
+  "losses": {},
+  "model": {
+    "name": "deep_sd_batchnorm_multigrid",
+    "modules": [
+      {
+        "type": "cat",
+        "modules": [
+          {
+            "type": "input_lr_int",
+            "scale_factor": [4, 3],
+            "interpolation_method": "bicubic"
+          },
+          {
+            "type": "input_id"
+          }
+        ]
+      },
+      {
+        "type": "conv",
+        "output_channels": 64,
+        "kernel_size": 9,
+        "dropout_rate": 0.0,
+        "leaky_slope": 0.0,
+        "padding_mode": "replication",
+        "use_batch_norm": true
+      },
+      {
+        "type": "conv",
+        "output_channels": 32,
+        "kernel_size": 1,
+        "dropout_rate": 0.0,
+        "leaky_slope": 0.0,
+        "padding_mode": "replication",
+        "use_batch_norm": true
+      },
+      {
+        "type": "conv",
+        "kernel_size": 5,
+        "dropout_rate": 0.0,
+        "leaky_slope": 1.0,
+        "padding_mode": "replication",
+        "use_batch_norm": false
+      }
+    ]
+  },
+  "training": {
+    "residual_interpolation_mode": null
+  }
+}

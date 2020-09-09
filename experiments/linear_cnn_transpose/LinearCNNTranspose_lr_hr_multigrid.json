@@ -1,0 +1,30 @@
+{
+  "grids": {
+    "input_lr": [
+      [["windU", "windV"], ["standard", {"dim": 0}]],
+      ["blh", ["standard", {"dim": 0}]],
+      ["fsr", ["standard", {"dim": 0}]],
+      ["z", ["standard", {"dim": 0}]],
+      ["zOro", ["standard", null]],
+      ["seaMask", ["standard", null]]
+    ],
+    "input_hr": [
+      ["zOro", ["standard", null]],
+      ["seaMask", ["standard", null]]
+    ],
+    "target": [
+      [["windU", "windV"], ["standard", {"dim": 0}]]
+    ]
+  },
+  "data": {},
+  "losses": {},
+  "model": {
+    "name": "linear_cnn_transpose_lr_hr_multi",
+    "modules": {
+      "type": "lincnnt"
+    }
+  },
+  "training": {
+    "residual_interpolation_mode": null
+  }
+}

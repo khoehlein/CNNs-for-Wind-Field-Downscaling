@@ -1,0 +1,10 @@
+from enum import Enum
+
+
+class CoreModuleType(Enum):
+    UNET = 'UNET'
+    RESUNET = 'RESUNET'
+    ENHANCENET = 'ENHANCENET'
+    RESUNETSUPER = 'RESUNETSUPER'
+    # LINEARCNN = 'LINEARCNN'
+    # LINEARREGRESSOR = 'LINEARREGRESSOR'

@@ -1,0 +1,57 @@
+{
+  "grids": {
+    "input_lr": [
+      [["windU", "windV"], ["standard", {"dim":  0}]],
+      ["zOro", "standard"],
+      ["seaMask", "standard"]
+    ],
+    "input_hr": [
+      ["zOro", ["standard", null]],
+      ["seaMask", ["standard", null]]
+    ],
+    "target": [
+      [["windU", "windV"], ["standard", {"dim":  0}]]
+    ]
+  },
+  "data": {},
+  "losses": {},
+  "model": {
+    "name": "enhancenet_lr_hr_s2d",
+    "modules": [
+      {
+        "type": "cat",
+        "modules": [
+          {
+            "type": "input_id"
+          },
+          {
+            "type": "s2d",
+            "scale_factor": [
+              4, 3
+            ]
+          }
+        ]
+      },
+      {
+        "type": "conv",
+        "output_channels": 64,
+        "kernel_size": 3,
+        "dropout_rate": 0.0,
+        "leaky_slope": 0.0,
+        "padding_mode": "replication",
+        "use_batch_norm": true
+      },
+      {
+        "type": "enhancenet",
+        "dropout_rate": 0.0,
+        "leaky_slope": 0.0,
+        "padding_mode": "replication",
+        "use_batch_norm": true,
+        "num_residual_blocks": 10
+      }
+    ]
+  },
+  "training": {
+    "residual_interpolation_mode": "bicubic"
+  }
+}

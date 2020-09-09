@@ -1,0 +1,97 @@
+{
+  "grids": {
+    "input_lr": [
+      [["windU", "windV"], ["standard", {"dim":  0}]],
+      ["blh", ["standard", {"dim":  0}]],
+      ["fsr", ["standard", {"dim":  0}]],
+      ["z", ["standard", {"dim":  0}]],
+      ["zOro", "standard"],
+      ["seaMask", "standard"]
+    ],
+    "input_hr": [],
+    "target": [
+      [["windU", "windV"], ["standard", {"dim":  0}]]
+    ]
+  },
+  "data": {},
+  "losses": {},
+  "model": {
+    "name": "fsrcnn_lr_multigrid",
+    "modules": [
+      {
+        "type": "conv",
+        "output_channels": 56,
+        "kernel_size": 5,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": false
+      },
+      {
+        "type": "conv",
+        "output_channels": 12,
+        "kernel_size": 1,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": false
+      },
+      {
+        "type": "conv",
+        "output_channels": 12,
+        "kernel_size": 3,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": false
+      },
+      {
+        "type": "conv",
+        "output_channels": 12,
+        "kernel_size": 3,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": false
+      },
+            {
+        "type": "conv",
+        "output_channels": 12,
+        "kernel_size": 3,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": false
+      },
+      {
+        "type": "conv",
+        "output_channels": 12,
+        "kernel_size": 3,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": false
+      },
+      {
+        "type": "conv",
+        "output_channels": 56,
+        "kernel_size": 1,
+        "dropout_rate": 0.0,
+        "leaky_slope": "p",
+        "padding_mode": "replication",
+        "use_batch_norm": false
+      },
+      {
+        "type": "deconv",
+        "kernel_size": 9,
+        "dropout_rate": 0.0,
+        "stride": [4, 3],
+        "leaky_slope": 1.0,
+        "use_batch_norm": false
+      }
+    ]
+  },
+  "training": {
+    "residual_interpolation_mode": null
+  }
+}
